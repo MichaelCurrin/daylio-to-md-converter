@@ -1,7 +1,7 @@
-# Daylio to Markdown Converter
+# Daylio to MD Converter
+> Convert a Daylio CSV export to a folder of Markdown files with frontmatter and notes in the body.
 
-Convert Daylio CSV export to a folder out Markdown files with frontmatter and notes in the body.
-
+Not supported - scales.
 
 ## Related projects
 
