@@ -10,7 +10,7 @@ requires-python = ">=3.13"
 dependencies = ["python-frontmatter (>=1.1.0,<2.0.0)"]
 
 [project.scripts]
-app = "dayliomd.__main__:main"
+app = "daylio2md.__main__:main"
 
 [build-system]
 requires = ["poetry-core>=2.0.0,<3.0.0"]
