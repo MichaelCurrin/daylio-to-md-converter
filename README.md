@@ -1,7 +1,9 @@
 # Daylio to MD Converter
 > Convert a Daylio CSV export to a folder of Markdown files with frontmatter and notes in the body.
 
-Not supported - scales.
+This is ideal if you want to migrate Daylio content to Obsidian.
+
+Not supported - scales in Daylio.
 
 ## Related projects
 
