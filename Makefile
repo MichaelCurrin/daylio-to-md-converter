@@ -1,6 +1,6 @@
 SHELL = /bin/bash
 
-APP_DIR = dayliomd
+APP_DIR = daylio2md
 
 OUT_DIR = output
 INPUT_PATH = sample/input.csv
