@@ -21,6 +21,11 @@ g install-global:
 	pipx install . --force
 
 
+fmt:
+	pipx run black .
+	pipx run isort  .
+
+
 app-help:
 	poetry run python -m $(APP_DIR) -h
 
