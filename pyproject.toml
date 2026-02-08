@@ -1,6 +1,6 @@
 [project]
 name = "daylio-to-md-converter"
-version = "0.1.0"
+version = "0.2.0"
 description = "Daylio CSV exports to Markdown converter"
 authors = [
   { name = "Michael Currin", email = "18750745+MichaelCurrin@users.noreply.github.com" },
