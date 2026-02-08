@@ -1,5 +1,5 @@
 full_date,date,weekday,time,mood,activities,scales,note_title,note
 2025-12-31,31 December,,8:02 pm,happy,nature / walk | music | movies / tv | exercise,,My note title,My note.
-2025-12-30,30 December,,2:03 pm,happy,alcohol
-2025-12-30,30 December,,11:02 am,happy,socialise
-2025-12-30,30 December,,10:01 am,sad,
+2025-12-30,30 December,,2:03 pm,happy,alcohol,,,
+2025-12-30,30 December,,11:02 am,happy,socialise,,Note with HTML,A&nbsp;B<br>C
+2025-12-30,30 December,,10:01 am,sad,,,,
