@@ -65,6 +65,7 @@ def format_note_content(row: CSVRow) -> str:
     if note_title:
         content_parts.append(f"# {note_title}")
     if note_body:
+        note_body = note_body.replace("nbsp;", " ").replace("<br>", "\n")
         content_parts.append(note_body)
 
     return "\n\n".join(content_parts)
