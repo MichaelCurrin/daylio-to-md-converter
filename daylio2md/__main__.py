@@ -37,8 +37,8 @@ class CSVRow(TypedDict):
 
 def parse_csv(input_path: Path) -> list[CSVRow]:
     """Parse tCSV file and return list of entry dictionaries."""
-    with open(input_path, encoding="utf-8-sig") as f:
-        reader = csv.DictReader(f)
+    with open(input_path, encoding="utf-8-sig") as f_in:
+        reader = csv.DictReader(f_in)
 
         return [cast(CSVRow, row) for row in reader]
 
@@ -75,15 +75,16 @@ def process_entry(row: CSVRow) -> tuple[str, str, dict[str, Any]]:
     """Process a CSV row and return date, content, and frontmatter data."""
     full_date = row["full_date"]
     time = convert_to_24hr(row["time"])
-    created_at = f"{full_date} {time}"
+    created_at = f"{full_date}T{time}"
 
     activities = parse_activities(row["activities"])
-    mood_value = MoodScore[row["mood"].strip().upper()].value
+    mood = row["mood"].strip()
+    mood_value = MoodScore[mood.upper()].value
     content = format_note_content(row)
 
     frontmatter_data = {
         "created_at": created_at,
-        "mood": row["mood"],
+        "mood": mood,
         "mood-score": mood_value,
         "activities": activities,
         "tags": [TAG_DAYLIO_EXPORT],
@@ -153,10 +154,21 @@ def convert_csv_to_notes(input_path: Path, output_path: Path) -> None:
 def main():
     """Main command-line entry-point."""
     parser = argparse.ArgumentParser(
-        description="Convert Daylio CSV export to individual Markdown files"
+        prog="daylio2md",
+        description="Convert Daylio CSV export to individual Markdown files.",
     )
-    parser.add_argument("input", type=Path, help="Path to the input CSV file.")
-    parser.add_argument("output", type=Path, help="Path to the output directory.")
+    parser.add_argument(
+        "input",
+        metavar="INPUT_CSV",
+        type=Path,
+        help="Path to the input CSV file exported from Daylio.",
+    )
+    parser.add_argument(
+        "output",
+        metavar="OUTPUT_DIR",
+        type=Path,
+        help="Path to an output directory. This will be created if necessary.",
+    )
 
     args = parser.parse_args()
 
