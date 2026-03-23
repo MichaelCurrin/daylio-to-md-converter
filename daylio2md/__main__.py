@@ -85,7 +85,7 @@ def process_entry(row: CSVRow) -> tuple[str, str, dict[str, Any]]:
 
     frontmatter_data = {
         "created_at": created_at,
-        "mood": mood,
+        "mood-label": mood,
         "mood-score": mood_value,
         "activities": activities,
         "tags": [TAG_DAYLIO_EXPORT],
