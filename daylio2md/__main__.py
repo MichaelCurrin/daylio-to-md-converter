@@ -13,7 +13,7 @@ TAG_DAYLIO_EXPORT = "daylio-export"
 
 
 class MoodScore(Enum):
-    """Enum representing Daylio mood levels with corresponding numerical scores."""
+    """Daylio mood levels with corresponding numerical scores."""
 
     AMAZING = 5
     HAPPY = 4
@@ -23,7 +23,7 @@ class MoodScore(Enum):
 
 
 class CSVRow(TypedDict):
-    """Daylio CSV rows."""
+    """Daylio CSV row."""
 
     full_date: str
     date: str
@@ -36,7 +36,7 @@ class CSVRow(TypedDict):
 
 
 def parse_csv(input_path: Path) -> list[CSVRow]:
-    """Parse tCSV file and return list of entry dictionaries."""
+    """Parse CSV file and return list of entry dictionaries."""
     with open(input_path, encoding="utf-8-sig") as f_in:
         reader = csv.DictReader(f_in)
 
@@ -56,7 +56,7 @@ def parse_activities(activities_str: str) -> list[str]:
 
 
 def format_note_content(row: CSVRow) -> str:
-    """Format the note content from a CSVRow's title and body."""
+    """Format the note content from a row's title and body."""
     content_parts: list[str] = []
 
     note_title = (row["note_title"] or "").strip()
@@ -64,8 +64,9 @@ def format_note_content(row: CSVRow) -> str:
 
     if note_title:
         content_parts.append(f"# {note_title}")
+
     if note_body:
-        note_body = note_body.replace("nbsp;", " ").replace("<br>", "\n")
+        note_body = note_body.replace("&nbsp;", " ").replace("<br>", "\n")
         content_parts.append(note_body)
 
     return "\n\n".join(content_parts)
@@ -151,7 +152,7 @@ def convert_csv_to_notes(input_path: Path, output_path: Path) -> None:
         print(f"- {activity}")
 
 
-def main():
+def main() -> None:
     """Main command-line entry-point."""
     parser = argparse.ArgumentParser(
         prog="daylio2md",
