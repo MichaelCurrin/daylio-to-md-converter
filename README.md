@@ -1,5 +1,5 @@
 # Daylio to MD Converter
-> Convert a Daylio CSV export to a folder of Markdown files with frontmatter and notes in the body.
+> Convert a Daylio CSV export to a folder of Markdown files with frontmatter and notes in the body
 
 
 This CSV tool will create one Markdown file per entry in the output folder and print the
@@ -39,7 +39,7 @@ make install
 ```
 
 ```sh
-poetry run python -m daylio2md TYPE INPUT_PATH OUTPUT_PATH
+poetry run python -m daylio2md TYPE INPUT_CSV OUTPUT_DIR
 ```
 
 Show available commands:
