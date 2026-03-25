@@ -7,7 +7,14 @@ authors = [
 ]
 readme = "README.md"
 requires-python = ">=3.13"
-dependencies = ["python-frontmatter (>=1.1.0,<2.0.0)"]
+dependencies = [
+  "python-frontmatter (>=1.1.0,<2.0.0)",
+  "python-slugify (>=8.0.4,<9.0.0)",
+]
+
+[tool.poetry.group.dev.dependencies]
+black = "^26.3.1"
+isort = "^8.0.1"
 
 [project.scripts]
 app = "daylio2md.__main__:main"
