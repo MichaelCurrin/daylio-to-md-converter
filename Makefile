@@ -1,7 +1,6 @@
 SHELL = /bin/bash
 
 APP_DIR = daylio2md
-
 OUT_DIR = output
 INPUT_PATH = sample/input.csv
 
@@ -22,8 +21,8 @@ g install-global:
 
 
 fmt:
-	pipx run black .
-	pipx run isort  .
+	poetry run black . --target-version py313
+	poetry run isort  .
 
 
 app-help:
