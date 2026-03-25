@@ -5,7 +5,9 @@
 This CSV tool will create one Markdown file per entry in the output folder and print the
 unique activities list to the console. This is ideal if you want to migrate Daylio content to Obsidian.
 
-Not supported - scales in Daylio.
+Not supported:
+- Scales in Daylio.
+- Keeping ordering of keys in YAML metadata. Even if using OrderedDict, the `frontmatter` package used loses the order.
 
 
 ## Setup and run
