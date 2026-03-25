@@ -5,11 +5,15 @@ import csv
 from datetime import datetime
 from enum import Enum
 from pathlib import Path
-from typing import Any, TypedDict, cast
+from typing import TypedDict, cast
 
 import frontmatter  # type: ignore
+from slugify import slugify
 
-TAG_DAYLIO_EXPORT = "daylio-export"
+TAG_DAYLIO_EXPORT = "daylio-journal-entry"
+SLUGIFY_REPLACEMENTS = [("-", "_"), ("/", "-")]
+
+TFrontMatter = dict[str, str | int | list[str]]
 
 
 class MoodScore(Enum):
@@ -72,23 +76,27 @@ def format_note_content(row: CSVRow) -> str:
     return "\n\n".join(content_parts)
 
 
-def process_entry(row: CSVRow) -> tuple[str, str, dict[str, Any]]:
+def process_entry(row: CSVRow) -> tuple[str, str, TFrontMatter]:
     """Process a CSV row and return date, content, and frontmatter data."""
     full_date = row["full_date"]
     time = convert_to_24hr(row["time"])
     created_at = f"{full_date}T{time}"
 
     activities = parse_activities(row["activities"])
+    activities_bools: dict[str, bool] = {
+        slugify(activity, replacements=SLUGIFY_REPLACEMENTS): True
+        for activity in activities
+    }
     mood = row["mood"].strip()
     mood_value = MoodScore[mood.upper()].value
     content = format_note_content(row)
 
-    frontmatter_data = {
+    frontmatter_data: TFrontMatter = {
         "created_at": created_at,
-        "mood-label": mood,
-        "mood-score": mood_value,
-        "activities": activities,
+        "mood_label": mood,
+        "mood_score": mood_value,
         "tags": [TAG_DAYLIO_EXPORT],
+        **activities_bools,
     }
 
     return full_date, content, frontmatter_data
@@ -98,7 +106,7 @@ def write_note(
     output_path: Path,
     date_str: str,
     content: str,
-    frontmatter_data: dict[str, Any],
+    frontmatter_data: TFrontMatter,
 ) -> None:
     """Write a Markdown file with frontmatter to the output directory.
 
@@ -136,20 +144,11 @@ def convert_csv_to_notes(input_path: Path, output_path: Path) -> None:
     entries = parse_csv(input_path)
     print(f"Processing {len(entries)} entries.")
 
-    unique_activities: set[str] = set()
-
     for row in entries:
         date_str, content, frontmatter_data = process_entry(row)
-        unique_activities.update(frontmatter_data.get("activities", []))
         write_note(output_path, date_str, content, frontmatter_data)
 
     print(f"Created {len(entries)} notes in {output_path}.")
-    print()
-
-    sorted_activities = sorted(unique_activities, key=str.casefold)
-    print("Unique activities:")
-    for activity in sorted_activities:
-        print(f"- {activity}")
 
 
 def main() -> None:
